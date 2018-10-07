@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Manuk Minasyan">
+    <meta name="description" content="John Conway's Game of Life">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <title>John Conway's Game of Life</title>
+</head>
+<body>
+<div id="game">
+    <h1>John Conway's Game of Life | {{ config.time }}</h1>
+    <hr>
+    <div class="control-panel">
+        <button @click="play">
+            <template v-if="!this.config.play">
+                Play
+            </template>
+            <template v-else>
+                Stop
+            </template>
+        </button>
+        <button @click="generateRandomGrid">Generate Random Grid</button>
+        <button @click="clear">Clear</button>
+        <div class="form-group">
+            <label for="speed">Speed: </label>
+            <input type="range" id="speed" min="10" max="1000" v-model="config.speed"/>
+            {{ config.speed }}
+        </div>
+        <div class="form-group">
+            <label for="speed">Vertical: </label>
+            <input type="number" v-model="vertical_count">
+        </div>
+        <div class="form-group">
+            <label for="speed">Horizontal: </label>
+            <input type="number" v-model="horizontal_count">
+        </div>
+    </div>
+    <table border="1">
+        <thead>
+        <tr>
+            <td v-for="n in horizontal_count+1">
+                <span>{{ n-1 }}</span>
+            </td>
+        </tr>
+        </thead>
+        <tr v-for="(rows, ver_index) in grid">
+            <td> <span>{{ ver_index+1 }}</span></td>
+            <td
+                    v-for="(value, hor_index) in rows"
+                    @click="liveGridItem(ver_index, hor_index)"
+                    :style="value.live ? 'background-color: '+value.color : ''">
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <b>Author` </b> <a href="http://minasyan.info" target="_blank">Manuk Minasyan</a>
+</div>
+
+<script src="js/vue.min.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

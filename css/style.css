@@ -1,0 +1,23 @@
+#game {
+    width: 560px;
+    margin: 0 auto;
+}
+
+table {
+    border: none;
+}
+
+td span {
+    display: block;
+    width: 15px;
+    height: 15px;
+    font-weight: bold;
+}
+
+.control-panel {
+    margin-bottom: 10px;
+}
+
+.control-panel #speed {
+    transform: rotate(180deg);
+}
