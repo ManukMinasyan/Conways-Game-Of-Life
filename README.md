@@ -2,4 +2,4 @@
 John Conway's Game of Life
 
 
-- [Demo](https://codepen.io/manukminasyan/full/BqLJxm/)
+- [Demo](https://codepen.io/manukminasyan/full/qJqOYM/)
