@@ -4,18 +4,21 @@
  * Date: 10/6/2018
  */
 
-Vue.config.devtools = true
+Vue.config.devtools = true;
 
 new Vue({
     el: '#game',
     data: {
+        name: 'John Conway\'s Game of Life',
         config: {
             play: false,
             speed: 1000,
-            time: 0
+            time: 0,
+            alive_count: 0,
+            dead_count: 0
         },
         vertical_count: 25,
-        horizontal_count: 25,
+        horizontal_count: 40,
         grid: [],
         colors: ['#001f3f', '#0074D9', '#7FDBFF']
     },
@@ -101,11 +104,16 @@ new Vue({
         },
         nextGrid() {
             const newGrid = [];
-
+            this.config.alive_count = this.config.dead_count = 0;
             for (let ver_index = 0; ver_index < this.grid.length; ver_index++) {
                 newGrid[ver_index] = [];
                 for (let hor_index = 0; hor_index < this.grid[ver_index].length; hor_index++) {
                     newGrid[ver_index][hor_index] = this.grid[ver_index][hor_index];
+                    if(this.grid[ver_index][hor_index].live === true){
+                        this.config.alive_count += 1;
+                    }else{
+                        this.config.dead_count +=1;
+                    }
                 }
             }
 
@@ -164,9 +172,30 @@ new Vue({
         },
         clear() {
             this.config.play = false;
-            this.config.time = 0;
             this.config.speed = 1000;
+            this.config.alive_count = this.config.dead_count = this.config.time = 0;
             this.createFirstGrid();
         }
     }
 });
+
+(function() {
+    // We must use JS as we need to select previous
+    // elements which can't be done with CSS.
+    $('.skew-title').children('span').hover((function() {
+        var $el, n;
+        $el = $(this);
+        n = $el.index() + 1;
+        $el.addClass('flat');
+        if (n % 2 === 0) {
+            return $el.prev().addClass('flat');
+        } else {
+            if (!$el.hasClass('last')) {
+                return $el.next().addClass('flat');
+            }
+        }
+    }), function() {
+        return $('.flat').removeClass('flat');
+    });
+
+}).call(this);

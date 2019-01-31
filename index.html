@@ -10,55 +10,70 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <title>John Conway's Game of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div id="game">
-    <h1>John Conway's Game of Life | {{ config.time }}</h1>
-    <hr>
-    <div class="control-panel">
-        <button @click="play">
-            <template v-if="!this.config.play">
-                Play
+    <div class="container">
+        <h1 class="row skew-title">
+            <template v-for="i in name.length">
+                <span v-if="name[i-1] !== ' '">{{ name[i-1] }}</span>
+                <template v-else>&nbsp;</template>
             </template>
-            <template v-else>
-                Stop
-            </template>
-        </button>
-        <button @click="generateRandomGrid">Generate Random Grid</button>
-        <button @click="clear">Clear</button>
-        <div class="form-group">
-            <label for="speed">Speed: </label>
-            <input type="range" id="speed" min="10" max="1000" v-model="config.speed"/>
-            {{ config.speed }}
-        </div>
-        <div class="form-group">
-            <label for="speed">Vertical: </label>
-            <input type="number" v-model="vertical_count">
-        </div>
-        <div class="form-group">
-            <label for="speed">Horizontal: </label>
-            <input type="number" v-model="horizontal_count">
-        </div>
+        </h1>
     </div>
-    <table border="1">
-        <thead>
-        <tr>
-            <td v-for="n in horizontal_count+1">
-                <span>{{ n-1 }}</span>
-            </td>
-        </tr>
-        </thead>
-        <tr v-for="(rows, ver_index) in grid">
-            <td> <span>{{ ver_index+1 }}</span></td>
-            <td
-                    v-for="(value, hor_index) in rows"
-                    @click="liveGridItem(ver_index, hor_index)"
-                    :style="value.live ? 'background-color: '+value.color : ''">
-            </td>
-        </tr>
-    </table>
-    <hr>
-    <b>Author` </b> <a href="http://minasyan.info" target="_blank">Manuk Minasyan</a>
+    <div class="main">
+        <div class="control-panel">
+            <button @click="play" class="btn btn-sm">
+                <template v-if="!this.config.play">
+                    Play
+                </template>
+                <template v-else>
+                    Stop
+                </template>
+            </button>
+            <button @click="generateRandomGrid" class="btn btn-sm">Generate Random Grid</button>
+            <button @click="clear" class="btn btn-sm">Clear</button>
+            <div class="form-group">
+                <label for="speed">Speed: </label>
+                <input type="range" id="speed" min="10" max="1000" v-model="config.speed"/>
+                {{ config.speed }}
+            </div>
+            <div class="form-group">
+                <label for="speed">Vertical: </label>
+                <input type="number" v-model="vertical_count" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="speed">Horizontal: </label>
+                <input type="number" v-model="horizontal_count" class="form-control">
+            </div>
+
+            <span class="badge badge-success">{{ config.alive_count }} Alive</span>
+            <span class="badge badge-danger">{{ config.dead_count }} Dead</span>
+        </div>
+        <table border="1">
+            <thead>
+            <tr>
+                <td v-for="n in horizontal_count+1">
+                    <span>{{ n-1 }}</span>
+                </td>
+            </tr>
+            </thead>
+            <tr v-for="(rows, ver_index) in grid">
+                <td><span>{{ ver_index+1 }}</span></td>
+                <td
+                        v-for="(value, hor_index) in rows"
+                        @click="liveGridItem(ver_index, hor_index)"
+                        :style="value.live ? 'background-color: '+value.color : ''">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="author">
+        <b>Author` </b> <a href="http://minasyan.info" target="_blank">Manuk Minasyan</a>
+    </div>
 </div>
 
 <script src="js/vue.min.js"></script>
