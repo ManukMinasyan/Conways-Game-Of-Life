@@ -18,7 +18,7 @@ new Vue({
             dead_count: 0
         },
         vertical_count: 25,
-        horizontal_count: 40,
+        horizontal_count: 30,
         grid: [],
         colors: ['#001f3f', '#0074D9', '#7FDBFF']
     },
